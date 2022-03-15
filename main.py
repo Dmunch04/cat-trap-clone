@@ -1,10 +1,10 @@
 import pygame
-from grid import Grid
+from grid import Grid, NodeState
 from pathfind import find_nearest_route, edges
 
 
 class Game:
-  def __init__(self, rows=12, columns=12, start=(6, 6)):
+  def __init__(self, rows=11, columns=11, start=(5, 5)):
     self.rows = rows
     self.cols = columns
     
@@ -16,8 +16,6 @@ class Game:
     self.clock = pygame.time.Clock()
     self.run = True
     self.tick = 60
-
-    self.last_route = None
 
   def loop(self):
     while self.run:
@@ -37,14 +35,12 @@ class Game:
           self.run = False
           print('Player won!')
         else:
-          next_pos = route.path[1]
+          self.grid.move_player(route.path[1][0], route.path[1][1])
 
-          if next_pos in edges(self.cols, self.rows):
+          if self.grid.player_pos in edges(self.cols, self.rows):
             self.run = False
             print('AI won!')
-          else:
-            self.grid.move_player(next_pos[0], next_pos[1])
-          
+
           self.player_turn = True
 
       self.screen.fill((0, 0, 0))
