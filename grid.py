@@ -57,7 +57,7 @@ class Grid:
         x = random.randint(0, self.cols - 1)
         y = random.randint(0, self.rows - 1)
   
-        if self.node_empty(x, y) and (x, y) not in edges(self.cols, self.rows):
+        if self.node_empty(x, y):
           self.place_wall(x, y)
           placed = True
 
@@ -90,7 +90,7 @@ class Grid:
     return False
 
   def place_wall(self, x, y):
-    if self.node_empty(x, y) and (x, y):
+    if self.node_empty(x, y):
       self.grid[x][y].update_state(NodeState.WALL)
       return True
 
